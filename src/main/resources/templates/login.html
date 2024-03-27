@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ログイン画面</title>
+</head>
+<body>
+  <h2>ログイン画面</h2>
+  <span th:text="${errorMsg}"></span>
+  <form th:action="@{/login}" method="post" th:object="${loginForm}">
+    <div>
+      <label>メールアドレス</label>
+      <input type="text" th:field="*{mailAdress}">
+    </div>
+    <div>
+      <label>パスワード</label>
+      <input type="password" th:field="*{password}">
+    </div>
+    <div>
+      <input type="submit" value="ログイン">
+    </div>
+  </form>
+</body>
+</html>
