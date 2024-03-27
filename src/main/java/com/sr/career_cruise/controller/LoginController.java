@@ -6,13 +6,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.sr.career_cruise.form.LoginForm;
+import com.sr.career_cruise.service.LoginService;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor
 public class LoginController {
 
-  private static final String MAIL_ADRESS = "user";
-  private static final String PASSWORD = "pwd";
-
+  private final LoginService service;
+  
   @GetMapping("/login")
   public String view(Model model, LoginForm loginForm) {
     return "login";
@@ -20,7 +23,8 @@ public class LoginController {
 
   @PostMapping("/login")
   public String login(Model model, LoginForm form){
-    var isCorrectUserAuth = form.getMailAdress().equals(MAIL_ADRESS) && form.getPassword().equals(PASSWORD);
+    var userInfo = service.searchUserByMailAdress(form.getMailAdress());
+    var isCorrectUserAuth = userInfo.isPresent() && form.getPassword().equals(userInfo.get().getPassword());
     if (isCorrectUserAuth){
       return "redirect:/menu";
     }else{
