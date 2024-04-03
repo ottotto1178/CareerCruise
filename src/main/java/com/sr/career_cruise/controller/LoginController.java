@@ -1,13 +1,16 @@
 package com.sr.career_cruise.controller;
 
+import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.sr.career_cruise.constant.ErrorMessageConst;
 import com.sr.career_cruise.form.LoginForm;
 import com.sr.career_cruise.service.LoginService;
+import com.sr.career_cruise.util.AppUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,6 +28,9 @@ public class LoginController {
 
   /** PasswordEncorder */
   private final PasswordEncoder passwordEncoder;
+
+  /** MessageSource */
+  private final MessageSource messageSource;
   
   /**
    * 初期表示
@@ -52,8 +58,8 @@ public class LoginController {
     if (isCorrectUserAuth){
       return "redirect:/menu";
     }else{
-      // TODO エラーメッセージはプロパティファイルで管理する
-      model.addAttribute("errorMsg", "ログインIDとパスワードの組み合わせが正しくありません。");
+      var errorMsg = AppUtil.getMessage(messageSource, ErrorMessageConst.LOGIN_WRONG_INPUT);
+      model.addAttribute("errorMsg", errorMsg);
       return "login";
     }
   }
