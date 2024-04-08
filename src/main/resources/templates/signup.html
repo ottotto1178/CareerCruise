@@ -7,7 +7,7 @@
 </head>
 <body>
   <h2>ユーザー登録画面</h2>
-  <span th:text="${errorMsg}"></span>
+  <span th:text="${message}"></span>
   <form th:action="@{/signup}" method="post" th:object="${signupForm}">
     <div>
       <label>氏名</label>
@@ -15,7 +15,7 @@
     </div>
     <div>
       <label>メールアドレス</label>
-      <input type="text" th:field="*{mailAdress}">
+      <input type="text" th:field="*{mailAddress}">
     </div>
     <div>
       <label>パスワード</label>

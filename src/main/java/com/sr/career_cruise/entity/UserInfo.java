@@ -19,8 +19,8 @@ public class UserInfo {
 
   /** メールアドレス */
   @Id
-  @Column(name = "mail_adress")
-  private String mailAdress;
+  @Column(name = "mail_address")
+  private String mailAddress;
 
   /** パスワード */
   private String password;
