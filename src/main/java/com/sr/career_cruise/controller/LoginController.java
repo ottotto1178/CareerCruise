@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.sr.career_cruise.constant.ErrorMessageConst;
+import com.sr.career_cruise.constant.MessageConst;
 import com.sr.career_cruise.form.LoginForm;
 import com.sr.career_cruise.service.LoginService;
 import com.sr.career_cruise.util.AppUtil;
@@ -58,11 +58,9 @@ public class LoginController {
     if (isCorrectUserAuth){
       return "redirect:/menu";
     }else{
-      var errorMsg = AppUtil.getMessage(messageSource, ErrorMessageConst.LOGIN_WRONG_INPUT);
+      var errorMsg = AppUtil.getMessage(messageSource, MessageConst.LOGIN_WRONG_INPUT);
       model.addAttribute("errorMsg", errorMsg);
       return "login";
     }
   }
 }
-
-// test
