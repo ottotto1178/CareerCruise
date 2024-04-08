@@ -22,3 +22,5 @@ public class MenuController {
     return "menu";
   }
 }
+
+// test
