@@ -1,7 +1,5 @@
 package com.sr.career_cruise.service;
 
-import java.util.Optional;
-
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,16 +32,12 @@ public class SignupService {
    * ユーザー情報テーブル新規登録
    * 
    * @param form 入力情報
-   * @return 登録情報(ユーザー情報Entity)、既に同じメールアドレスで登録されている場合はEmpty
+   * @return 登録情報(ユーザー情報Entity)
    */
-  public Optional<UserInfo> registerUserInfo(SignupForm form){
-    var userInfoExistedOpt = repository.findById(form.getMailAddress());
-    if(userInfoExistedOpt.isPresent()){
-      return Optional.empty();
-    }
+  public UserInfo registerUserInfo(SignupForm form){
     var userInfo = mapper.map(form, UserInfo.class);
     var encodedPassword = passwordEncoder.encode(form.getPassword());
     userInfo.setPassword(encodedPassword);
-    return Optional.of(repository.save(userInfo));
+    return repository.save(userInfo);
   }
 }

@@ -22,10 +22,10 @@ public class LoginService {
 
   /**
    * ユーザー情報テーブルキー検索
-   * @param mailAddress メールアドレス
+   * @param mailAdress メールアドレス
    * @return 検索結果
    */
-  public Optional<UserInfo> searchUserByMailAddress(String mailAddress){
-    return repository.findById(mailAddress);
+  public Optional<UserInfo> searchUserByMailAdress(String mailAdress){
+    return repository.findById(mailAdress);
   }
 }

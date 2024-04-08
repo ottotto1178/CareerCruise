@@ -1,18 +1,12 @@
 package com.sr.career_cruise.controller;
 
-import java.util.Optional;
-
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.sr.career_cruise.constant.MessageConst;
-import com.sr.career_cruise.entity.UserInfo;
 import com.sr.career_cruise.form.SignupForm;
 import com.sr.career_cruise.service.SignupService;
-import com.sr.career_cruise.util.AppUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,10 +21,7 @@ public class SignupController {
 
   /** ユーザー登録画面Service */
   private final SignupService service;
-
-  /** MessageSource */
-  private final MessageSource messageSource;
-
+  
   /**
    * 初期表示
    * 
@@ -52,24 +43,6 @@ public class SignupController {
    */
   @PostMapping("/signup")
   public void signup(Model model, SignupForm form){
-    var userInfoOpt = service.registerUserInfo(form);
-    var message = AppUtil.getMessage(messageSource, judgeMessageKey(userInfoOpt));
-    model.addAttribute("message", message);
-  }
-  
-  /**
-   * ユーザー情報登録時のメッセージキー判定
-   * 
-   * @param userinfoOpt ユーザー情報登録結果(既に登録されている場合はEmpty)
-   * @return メッセージキー
-   */
-  private String judgeMessageKey(Optional<UserInfo> userinfoOpt){
-    if(userinfoOpt.isEmpty()){
-      return MessageConst.SIGNUP_EXISTED_MAIL_ADDRESS;
-    }else{
-      return MessageConst.SIGNUP_REGISTER_SUCCEED;
-    }
+    var userInfo = service.registerUserInfo(form);
   }
 }
-
-// test
