@@ -19,7 +19,7 @@ public class UserInfo {
 
   /** メールアドレス */
   @Id
-  @Column(name = "mail_adress")
+  @Column(name = "mail_address")
   private String mailAdress;
 
   /** パスワード */

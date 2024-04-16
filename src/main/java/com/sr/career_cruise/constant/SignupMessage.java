@@ -1,8 +1,7 @@
 package com.sr.career_cruise.constant;
 
-
-import lombok.AllArgsConstructor
-import lombok.Getter
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @Getter
 @AllArgsConstructor

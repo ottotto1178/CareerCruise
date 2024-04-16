@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.sr.career_cruise.constant.MessageConst;
 import com.sr.career_cruise.constant.SignupMessage;
 import com.sr.career_cruise.entity.UserInfo;
 import com.sr.career_cruise.form.SignupForm;
@@ -55,7 +54,7 @@ public class SignupController {
   @PostMapping("/signup")
   public void signup(Model model, SignupForm form){
     var userInfoOpt = service.registerUserInfo(form);
-    var signupMessage = judgeMessageKey(userinfoOpt);
+    var signupMessage = judgeMessageKey(userInfoOpt);
     var messageId = AppUtil.getMessage(messageSource, signupMessage.getMessage());
     model.addAttribute("message", messageId);
     model.addAttribute("isError", signupMessage.isError());

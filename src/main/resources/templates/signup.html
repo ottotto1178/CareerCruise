@@ -10,26 +10,28 @@
   <div th:replace="common/messageIcon :: messageIcon"></div>
   <div class="container-fluid">
     <h2>ユーザー登録画面</h2>
-    <div class="alert d-flex align-items-center" th:classappend|${isError ? 'alert-danger' : 'alert-primary'}| role="alert" th:if="${message != null}">
-      <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Info:">
+    <div class="alert d-flex align-items-center" th:classappend="|${isError ? 'alert-danger' : 'alert-primary'}|" role="alert" th:if="${message != null}">
+      <svg class="bi flex-shrink-0 me-2" width="24" height="24">
         <use xlink:href="#exclamation-triangle-fill" th:if="${isError}"/>
         <use xlink:href="#info-fill" th:unless="${isError}"/>
       </svg>
       <span th:text="${message}"></span>
     </div>
     <form th:action="@{/signup}" method="post" th:object="${signupForm}">
-      <div class="col-3 col-md-2 col-xxl-1">
-        <p><label for="name">氏名</label>
-        <input class="form-control" type="text" th:field="*{name}">
-      </div>
-      <div class="col-3 col-md-2 col-xxl-1">
-        <p><label>メールアドレス</label>
-        <input class="form-control" type="text" th:field="*{mailAdress}">
-      </div>
-      <div class="col-3 col-md-2 col-xxl-1">
-        <p><label>パスワード</label>
-        <input class="form-control" type="password" th:field="*{password}">
-        <p><input class="btn btn-primary" type="submit" value="ユーザー登録">
+      <div class="form-group">
+        <div class="col-3 col-md-2 col-xxl-1">
+          <p><label for="name">氏名</label>
+          <input class="form-control" type="text" th:field="*{name}">
+        </div>
+        <div class="col-3 col-md-2 col-xxl-1">
+          <p><label>メールアドレス</label>
+          <input class="form-control" type="text" th:field="*{mailAdress}">
+        </div>
+        <div class="col-3 col-md-2 col-xxl-1">
+          <p><label>パスワード</label>
+          <input class="form-control" type="password" th:field="*{password}">
+          <p><input class="btn btn-primary" type="submit" value="ユーザー登録">
+        </div>
       </div>
     </form>
     <a th:href="@{/login}">▶ログイン画面へ</a>
