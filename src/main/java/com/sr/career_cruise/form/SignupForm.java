@@ -9,6 +9,7 @@ import lombok.Data;
  */
 @Data
 public class SignupForm {
+  
   private String name;
   private String mailAdress;
   private String password;
