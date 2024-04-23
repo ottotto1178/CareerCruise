@@ -49,15 +49,31 @@ public class SignupController {
    * 
    * @param model モデル
    * @param form 入力情報 
+   * @param bdResult バリデーションチェック結果
    * @return 表示画面
    */
   @PostMapping("/signup")
-  public void signup(Model model, SignupForm form){
+  public void signup(Model model, @Validated SignupForm form, BindingResult bdResult){
+    if(bdResult.hasErrors()){
+      editGuideMessage(model, MessageConst.FORM_ERROR, true);
+      return;
+    }
     var userInfoOpt = service.registerUserInfo(form);
     var signupMessage = judgeMessageKey(userInfoOpt);
-    var messageId = AppUtil.getMessage(messageSource, signupMessage.getMessage());
-    model.addAttribute("message", messageId);
-    model.addAttribute("isError", signupMessage.isError());
+    editGuideMessage(model, signupMessage.getMessageId(), signupMessage.isError());
+  }
+  
+  /**
+   * 表示するガイドメッセージを設定する
+   * 
+   * @param model モデル
+   * @param messageId メッセージID
+   * @param isError エラー有無
+   */
+  private void editGuideMessage(Model model, String messageId, boolean isError){
+    var message = AppUtil.getMessage(messageSource, messageId);
+    model.addAttribute("message", message);
+    model.addAttribute("isError", isError);
   }
   
   /**

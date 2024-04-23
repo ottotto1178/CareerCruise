@@ -23,15 +23,18 @@
           <p><label for="name">氏名</label>
           <input class="form-control" type="text" th:field="*{name}">
         </div>
+        <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
         <div class="col-3 col-md-2 col-xxl-1">
           <p><label>メールアドレス</label>
-          <input class="form-control" type="text" th:field="*{mailAdress}">
+          <input class="form-control" type="text" th:field="*{mailAddress}">
         </div>
+        <span class="text-danger" th:if="${#fields.hasErrors('mailAddress')}" th:errors="*{mailAddress}"></span>
         <div class="col-3 col-md-2 col-xxl-1">
-          <p><label>パスワード</label>
+          <p><label for="password">パスワード</label>
           <input class="form-control" type="password" th:field="*{password}">
-          <p><input class="btn btn-primary" type="submit" value="ユーザー登録">
         </div>
+        <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+        <p><input class="btn btn-primary" type="submit" value="ユーザー登録">
       </div>
     </form>
     <a th:href="@{/login}">▶ログイン画面へ</a>
