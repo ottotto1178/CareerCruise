@@ -36,7 +36,7 @@ public class SignupService {
    * @return 登録情報(ユーザー情報Entity)、既に同じメールアドレスで登録されている場合はEmpty
    */
   public Optional<UserInfo> registerUserInfo(SignupForm form){
-    var userInfoExistedOpt = repository.findById(form.getMailAdress());
+    var userInfoExistedOpt = repository.findById(form.getMailAddress());
     if(userInfoExistedOpt.isPresent()){
       return Optional.empty();
     }

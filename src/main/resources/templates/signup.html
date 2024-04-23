@@ -23,17 +23,17 @@
           <p><label for="name">氏名</label>
           <input class="form-control" type="text" th:field="*{name}">
         </div>
-        <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">入力は必須です。</span>
         <div class="col-3 col-md-2 col-xxl-1">
           <p><label>メールアドレス</label>
           <input class="form-control" type="text" th:field="*{mailAddress}">
         </div>
-        <span class="text-danger" th:if="${#fields.hasErrors('mailAddress')}" th:errors="*{mailAddress}"></span>
+        <span class="text-danger" th:if="${#fields.hasErrors('mailAddress')}" th:errors="*{mailAddress}">入力は必須です。</span>
         <div class="col-3 col-md-2 col-xxl-1">
           <p><label for="password">パスワード</label>
           <input class="form-control" type="password" th:field="*{password}">
         </div>
-        <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+        <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">入力は必須です。</span>
         <p><input class="btn btn-primary" type="submit" value="ユーザー登録">
       </div>
     </form>

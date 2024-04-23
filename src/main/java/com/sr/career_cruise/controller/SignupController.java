@@ -5,9 +5,12 @@ import java.util.Optional;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.sr.career_cruise.constant.MessageConst;
 import com.sr.career_cruise.constant.SignupMessage;
 import com.sr.career_cruise.entity.UserInfo;
 import com.sr.career_cruise.form.SignupForm;
@@ -60,7 +63,7 @@ public class SignupController {
     }
     var userInfoOpt = service.registerUserInfo(form);
     var signupMessage = judgeMessageKey(userInfoOpt);
-    editGuideMessage(model, signupMessage.getMessageId(), signupMessage.isError());
+    editGuideMessage(model, signupMessage.getMessage(), signupMessage.isError());
   }
   
   /**

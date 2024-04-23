@@ -58,7 +58,7 @@ public class LoginController {
     if (isCorrectUserAuth){
       return "redirect:/menu";
     }else{
-      var errorMsg = AppUtil.getMessage(messageSource, MessageConst.LOGIN_WRONG_INPUT);
+      var errorMsg = AppUtil.getMessage(messageSource, MessageConst.FORM_ERROR);
       model.addAttribute("errorMsg", errorMsg);
       return "login";
     }
