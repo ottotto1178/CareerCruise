@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.sr.career_cruise.constant.MessageConst;
 import com.sr.career_cruise.constant.SignupMessage;
+import com.sr.career_cruise.constant.UrlConst;
 import com.sr.career_cruise.entity.UserInfo;
 import com.sr.career_cruise.form.SignupForm;
 import com.sr.career_cruise.service.SignupService;
@@ -42,7 +43,7 @@ public class SignupController {
    * @param form 入力情報 
    * @return 表示画面
    */
-  @GetMapping("/signup")
+  @GetMapping(UrlConst.SIGNUP)
   public String view(Model model, SignupForm form) {
     return "signup";
   }
@@ -55,7 +56,7 @@ public class SignupController {
    * @param bdResult バリデーションチェック結果
    * @return 表示画面
    */
-  @PostMapping("/signup")
+  @PostMapping(UrlConst.SIGNUP)
   public void signup(Model model, @Validated SignupForm form, BindingResult bdResult){
     if(bdResult.hasErrors()){
       editGuideMessage(model, MessageConst.FORM_ERROR, true);

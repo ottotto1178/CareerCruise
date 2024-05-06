@@ -3,6 +3,8 @@ package com.sr.career_cruise.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.sr.career_cruise.constant.UrlConst;
+
 /**
  * メニュー画面Controller
  * 
@@ -17,7 +19,7 @@ public class MenuController {
    * 
    * @return 表示画面
    */
-  @GetMapping("/menu")
+  @GetMapping(UrlConst.MENU)
   public String view(){
     return "menu";
   }
