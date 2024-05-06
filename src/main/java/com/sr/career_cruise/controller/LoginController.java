@@ -1,6 +1,7 @@
 package com.sr.career_cruise.controller;
 
 import org.springframework.context.MessageSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +28,7 @@ public class LoginController {
   private final LoginService service;
 
   /** PasswordEncorder */
-  private final PasswordEncoder passwordEncoder;
+  private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
   /** MessageSource */
   private final MessageSource messageSource;
@@ -53,7 +54,7 @@ public class LoginController {
    */
   @PostMapping("/login")
   public String login(Model model, LoginForm form){
-    var userInfo = service.searchUserByMailAdress(form.getMailAdress());
+    var userInfo = service.searchUserBymailAddress(form.getMailAddress());
     var isCorrectUserAuth = userInfo.isPresent() && passwordEncoder.matches(form.getPassword(), userInfo.get().getPassword());
     if (isCorrectUserAuth){
       return "redirect:/menu";

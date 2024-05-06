@@ -3,6 +3,7 @@ package com.sr.career_cruise.service;
 import java.util.Optional;
 
 import org.dozer.Mapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class SignupService {
   private final Mapper mapper;
 
   /** PasswordEncorder */
-  private final PasswordEncoder passwordEncoder;
+  private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
   /**
    * ユーザー情報テーブル新規登録
