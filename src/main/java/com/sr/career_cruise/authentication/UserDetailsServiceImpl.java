@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
  * 
  * @author shimokawa
  */
- @Component
+@Component
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService{
   /** ユーザー情報テーブルRepository */

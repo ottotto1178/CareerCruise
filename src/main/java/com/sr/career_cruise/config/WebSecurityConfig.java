@@ -11,6 +11,15 @@ import com.sr.career_cruise.constant.UrlConst;
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfig {
+  /** PasswordEncorder */
+  private final PasswordEncoder passwordEncoder;
+  
+  /** UserDetailsService */
+  private final UserDetailsService userDetailsService
+  
+  /** MessageSource */
+  private final MessageSource messageSource;
+  
   /** ユーザー名のname属性 */
   private final String USERNAME_PARAMETER = "mailAddress";
 
@@ -35,5 +44,20 @@ public class WebSecurityConfig {
       );
     
     return http.build();
+  }
+  
+  /**
+   * Provider定義
+   * 
+   * @return カスタマイズProvider情報
+   */
+  @Bean
+  AuthenticationProvider daoAuthenticationProvider(){
+    DaoAuthenticationProvider provider = new DaoAuthrnticationProvider();
+    provider.setUserDetailsService(userDetailsService);
+    provider.setPasswordEncorder(passwordEncorder);
+    provider.setMessageSource(messageSource);
+    
+    return provider;
   }
 }
