@@ -1,5 +1,10 @@
 package com.sr.career_cruise.authentication;
 
+import java.time.LocalDateTime;
+
+import org.springframework.context.event.EventListener;
+import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
+import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,6 +26,12 @@ public class UserDetailsServiceImpl implements UserDetailsService{
   /** ユーザー情報テーブルRepository */
   private final UserInfoRepository repository;
 
+  /** ログイン失敗回数制限 */
+  private final int LOCKING_BORDER_COUNT = 3;
+
+  /** ロック時間 */
+  private final int LOCKING_TIME = 1;
+
   /**
    * ユーザー情報生成
    * 
@@ -31,14 +42,14 @@ public class UserDetailsServiceImpl implements UserDetailsService{
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
     var userInfo = repository.findById(username).orElseThrow(() -> new UsernameNotFoundException(username));
     
-    var accountLockedTime = userInfo,getAccountLockedTime();
-    var is AccountLocked = accountLockedTime != null && accountLockedTime.plusHours(LOCKING_TIME).isAfter(LocalDateTime.now());
+    var accountLockedTime = userInfo.getAccountLockedTime();
+    var isAccountLocked = accountLockedTime != null && accountLockedTime.plusHours(LOCKING_TIME).isAfter(LocalDateTime.now());
     
     return User.withUsername(userInfo.getMailAddress())
       .password(userInfo.getPassword())
       .roles("USER")
       .disabled(userInfo.isDisabled())
-      .accountLocked(isAccountLocked  )
+      .accountLocked(isAccountLocked)
       .build();
   }
   
@@ -48,10 +59,10 @@ public class UserDetailsServiceImpl implements UserDetailsService{
    * @param event イベント情報
    */
   @EventListener
-  public void handle(AuthenticationFailurBadCredentialEvent event){
+  public void handle(AuthenticationFailureBadCredentialsEvent event){
     var mailAddress = event.getAuthentication().getName();
     repository.findById(mailAddress).ifPresent(userInfo -> {
-      repository.save(userInfo.incrementLoginFailurCount());
+      repository.save(userInfo.incrementFailurCount());
       
       var isReachFailurCount = userInfo.getLoginFailurCount() == LOCKING_BORDER_COUNT;
       if(isReachFailurCount){

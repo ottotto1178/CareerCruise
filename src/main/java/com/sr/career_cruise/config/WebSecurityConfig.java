@@ -1,21 +1,29 @@
 package com.sr.career_cruise.config;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.sr.career_cruise.constant.UrlConst;
 
+import lombok.RequiredArgsConstructor;
+
 @EnableWebSecurity
 @Configuration
+@RequiredArgsConstructor
 public class WebSecurityConfig {
   /** PasswordEncorder */
   private final PasswordEncoder passwordEncoder;
   
   /** UserDetailsService */
-  private final UserDetailsService userDetailsService
+  private final UserDetailsService userDetailsService;
   
   /** MessageSource */
   private final MessageSource messageSource;
@@ -53,9 +61,9 @@ public class WebSecurityConfig {
    */
   @Bean
   AuthenticationProvider daoAuthenticationProvider(){
-    DaoAuthenticationProvider provider = new DaoAuthrnticationProvider();
+    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
     provider.setUserDetailsService(userDetailsService);
-    provider.setPasswordEncorder(passwordEncorder);
+    provider.setPasswordEncoder(passwordEncoder);
     provider.setMessageSource(messageSource);
     
     return provider;

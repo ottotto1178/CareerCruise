@@ -1,9 +1,12 @@
 package com.sr.career_cruise.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -14,6 +17,7 @@ import lombok.Data;
 @Entity
 @Table(name="user_info")
 @Data
+@AllArgsConstructor
 public class UserInfo {
   /** 氏名 */
   private String name;
@@ -32,7 +36,7 @@ public class UserInfo {
   
   /** アカウントロック日時 */
   @Column(name = "account_locked_time")
-  private LocalDateTime accountLockedTime;
+  private  LocalDateTime accountLockedTime;
   
   /** 利用可不可 */
   @Column(name = "is_disabled")
@@ -47,7 +51,7 @@ public class UserInfo {
    * @return ログイン失敗回数が加算されたUserInfo
    */
   public UserInfo incrementFailurCount(){
-    return new UserInfo(name, mailaddress, password, ++loginFailurCount, accountLockedTime, isDisabled);
+    return new UserInfo(name, mailAddress, password, ++loginFailurCount, accountLockedTime, isDisabled);
   }
   
   /**
@@ -56,6 +60,15 @@ public class UserInfo {
    * @return ログイン失敗回数が加算されたUserInfo
    */
   public UserInfo resetLoginFailurInfo(){
-    return new UserInfo(name, mailaddress, password, 0, null, isDisabled);
+    return new UserInfo(name, mailAddress, password, 0, null, isDisabled);
+  }
+
+  /**
+	 * アカウントロック状態に更新する
+	 * 
+	 * @return ログイン失敗回数、アカウントロック日時が更新されたUserInfo
+	 */
+  public UserInfo updateAccountLocked(){
+    return new UserInfo(name, mailAddress, password, 0, LocalDateTime.now(), isDisabled);
   }
 }
