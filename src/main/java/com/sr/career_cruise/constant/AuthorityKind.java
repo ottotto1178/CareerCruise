@@ -1,6 +1,7 @@
 package com.sr.career_cruise.constant;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * ユーザー権限種別
@@ -8,7 +9,7 @@ import lombok.AllArgsConstructor;
  * @author shimokawa
  */
  @Getter
- @AllArgsConstruvtor
+ @AllArgsConstructor
  public enum AuthorityKind{
    /** 企業ごとの進捗登録・更新が可能 */
    COMPANY_MANAGER("1"),

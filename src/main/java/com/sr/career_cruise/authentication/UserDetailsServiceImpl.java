@@ -2,6 +2,7 @@ package com.sr.career_cruise.authentication;
 
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
@@ -27,12 +28,12 @@ public class UserDetailsServiceImpl implements UserDetailsService{
   private final UserInfoRepository repository;
 
   /** ログイン失敗回数制限 */
-  @Valie("${security.locking-border-count}")
+  @Value("${security.locking-border-count}")
   private int lockingBorderCount;
 
   /** ロック時間 */
   @Value("${security.locking-time}")
-  private final int lockingTime;
+  private int lockingTime;
 
   /**
    * ユーザー情報生成
