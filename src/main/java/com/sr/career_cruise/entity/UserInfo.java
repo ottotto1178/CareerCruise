@@ -30,6 +30,7 @@ public class UserInfo {
   /** パスワード */
   private String password;
   
+  // TODO 以下のフィールドは、DBには存在しないため、DBにカラムを追加する必要がある
   /** ログイン失敗回数 */
   @Column(name = "login_failur_count")
   private int loginFailurCount = 0;
