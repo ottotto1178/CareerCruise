@@ -49,6 +49,9 @@ public class WebSecurityConfig {
         login -> login.loginPage(UrlConst.LOGIN) // LoginControllerのviewメソッドを呼び出す
               .usernameParameter(USERNAME_PARAMETER) // ログイン画面のメールアドレスを取得
               .defaultSuccessUrl(UrlConst.MENU) // ログイン成功時のリダイレクト先
+      )
+      .logout(
+        logout -> logout.logoutSuccessUrl(UrlConst.SIGNUP)
       );
     
     return http.build();

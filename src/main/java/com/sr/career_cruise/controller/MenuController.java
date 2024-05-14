@@ -20,7 +20,12 @@ public class MenuController {
    * @return 表示画面
    */
   @GetMapping(UrlConst.MENU)
-  public String view(){
+  public String view(@AuthenticationPrincipal User user, Model model){
+    var hasUserManageAuth = user.getAuthorities().stream()
+      .allMatch(authority -> authority.getAuthority().equals(AuthorityKind.COMPANY_MANAGER.getAuthorityKind()));
+    
+    model.addAttribute("hasUserManageAuth", hasUserManageAuth);
+    
     return "menu";
   }
 }

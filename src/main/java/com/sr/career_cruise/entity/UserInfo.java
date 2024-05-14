@@ -43,6 +43,10 @@ public class UserInfo {
   @Column(name = "is_disabled")
   private boolean isDisabled;
   
+  /** ユーザー権限 */
+  @Column
+  private String authority;
+  
   public UserInfo(){
   }
   
@@ -52,7 +56,7 @@ public class UserInfo {
    * @return ログイン失敗回数が加算されたUserInfo
    */
   public UserInfo incrementFailurCount(){
-    return new UserInfo(name, mailAddress, password, ++loginFailurCount, accountLockedTime, isDisabled);
+    return new UserInfo(name, mailAddress, password, ++loginFailurCount, accountLockedTime, isDisabled, authority);
   }
   
   /**
@@ -61,7 +65,7 @@ public class UserInfo {
    * @return ログイン失敗回数が加算されたUserInfo
    */
   public UserInfo resetLoginFailurInfo(){
-    return new UserInfo(name, mailAddress, password, 0, null, isDisabled);
+    return new UserInfo(name, mailAddress, password, 0, null, isDisabled, authority);
   }
 
   /**
@@ -70,6 +74,6 @@ public class UserInfo {
 	 * @return ログイン失敗回数、アカウントロック日時が更新されたUserInfo
 	 */
   public UserInfo updateAccountLocked(){
-    return new UserInfo(name, mailAddress, password, 0, LocalDateTime.now(), isDisabled);
+    return new UserInfo(name, mailAddress, password, 0, LocalDateTime.now(), isDisabled, authority);
   }
 }

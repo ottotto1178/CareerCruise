@@ -6,6 +6,15 @@
   <title>トップメニュー</title>
 </head>
 <body>
-  トップメニュー
+  <div th:insert="common/sourceList :: sourceList"></div>
+  <div th:replace="common/header :: header"></div>
+  <div class="container-fruid">
+    <h2>トップメニュー</h2>
+    <div class="mt-3">
+      エントリー中の企業一覧の確認、編集へ
+    </div>
+    <a href="" class="btn btn-primary">企業一覧画面へ</a>
+    <th:block th:if="${hasUserManageAuth}"></th:block>
+  </div>
 </body>
 </html>

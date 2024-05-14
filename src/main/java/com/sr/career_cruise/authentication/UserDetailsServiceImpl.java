@@ -27,10 +27,12 @@ public class UserDetailsServiceImpl implements UserDetailsService{
   private final UserInfoRepository repository;
 
   /** ログイン失敗回数制限 */
-  private final int LOCKING_BORDER_COUNT = 3;
+  @Valie("${security.locking-border-count}")
+  private int lockingBorderCount;
 
   /** ロック時間 */
-  private final int LOCKING_TIME = 1;
+  @Value("${security.locking-time}")
+  private final int lockingTime;
 
   /**
    * ユーザー情報生成
@@ -43,11 +45,11 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     var userInfo = repository.findById(username).orElseThrow(() -> new UsernameNotFoundException(username));
     
     var accountLockedTime = userInfo.getAccountLockedTime();
-    var isAccountLocked = accountLockedTime != null && accountLockedTime.plusHours(LOCKING_TIME).isAfter(LocalDateTime.now());
+    var isAccountLocked = accountLockedTime != null && accountLockedTime.plusHours(lockingTime).isAfter(LocalDateTime.now());
     
     return User.withUsername(userInfo.getMailAddress())
       .password(userInfo.getPassword())
-      .roles("USER")
+      .authorities(userInfo.getAuthority())
       .disabled(userInfo.isDisabled())
       .accountLocked(isAccountLocked)
       .build();
@@ -64,7 +66,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     repository.findById(mailAddress).ifPresent(userInfo -> {
       repository.save(userInfo.incrementFailurCount());
       
-      var isReachFailurCount = userInfo.getLoginFailurCount() == LOCKING_BORDER_COUNT;
+      var isReachFailurCount = userInfo.getLoginFailurCount() == lockingBorderCount;
       if(isReachFailurCount){
         repository.save(userInfo.updateAccountLocked());
       }
