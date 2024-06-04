@@ -2,49 +2,27 @@ package com.sr.career_cruise.service;
 
 import java.util.Optional;
 
-import org.dozer.Mapper;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import com.sr.career_cruise.constant.AuthorityKind;
 import com.sr.career_cruise.entity.UserInfo;
 import com.sr.career_cruise.form.SignupForm;
-import com.sr.career_cruise.repository.UserInfoRepository;
-
-import lombok.RequiredArgsConstructor;
 
 /**
- * ユーザー登録画面Service
+ * ユーザー登録画面Serviceインターフェース
  * 
  * @author shimokawa
  */
-@Service
-@RequiredArgsConstructor
-public class SignupService {
-  /** ユーザー情報テーブルDAO */
-  private final UserInfoRepository repository;
-
-  /** Dozer Mapper */
-  private final Mapper mapper;
-
-  /** PasswordEncorder */
-  private final PasswordEncoder passwordEncoder;
+public interface SignupService {
 
   /**
-   * ユーザー情報テーブル新規登録
+   * 画面の入力情報を元にユーザー情報テーブルの新規登録を行う
+   * 
+   * <p>但し、以下のテーブル項目はこの限りではない</p>
+   * <ul>
+   * <li>パスワード:画面で入力したものがハッシュ化され登録される</li>
+   * <li>権限:常に「進捗状況の確認が可能」のコード血が登録される</li>
+   * </ul>
    * 
    * @param form 入力情報
    * @return 登録情報(ユーザー情報Entity)、既に同じメールアドレスで登録されている場合はEmpty
    */
-  public Optional<UserInfo> registerUserInfo(SignupForm form){
-    var userInfoExistedOpt = repository.findById(form.getMailAddress());
-    if(userInfoExistedOpt.isPresent()){
-      return Optional.empty();
-    }
-    var userInfo = mapper.map(form, UserInfo.class);
-    var encodedPassword = passwordEncoder.encode(form.getPassword());
-    userInfo.setPassword(encodedPassword);
-    userInfo.setAuthority(AuthorityKind.COMPANY_MANAGER.getAuthorityKind());
-    return Optional.of(repository.save(userInfo));
-  }
+  public Optional<UserInfo> registerUserInfo(SignupForm form);
 }

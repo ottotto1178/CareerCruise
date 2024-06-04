@@ -15,7 +15,7 @@ import com.sr.career_cruise.constant.SignupMessage;
 import com.sr.career_cruise.constant.UrlConst;
 import com.sr.career_cruise.entity.UserInfo;
 import com.sr.career_cruise.form.SignupForm;
-import com.sr.career_cruise.service.SignupService;
+import com.sr.career_cruise.service.SignupServiceImpl;
 import com.sr.career_cruise.util.AppUtil;
 
 
@@ -31,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 public class SignupController {
 
   /** ユーザー登録画面Service */
-  private final SignupService service;
+  private final SignupServiceImpl service;
 
   /** MessageSource */
   private final MessageSource messageSource;
