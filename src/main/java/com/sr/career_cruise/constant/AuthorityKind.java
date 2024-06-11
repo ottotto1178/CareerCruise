@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * ユーザー権限種別
+ * ユーザー権限種別Enumクラス
  * 
  * @author shimokawa
  */
@@ -17,7 +17,7 @@ import lombok.Getter;
    /** 自ユーザーについてプロフィールの閲覧・編集が可能 */
    USER_PROFILE_MANAGER("2"),
    
-   /** 自ユーザーについてプロフィールの閲覧・編集が可能 */
+   /** 全ユーザーについてプロフィールの閲覧・編集が可能 */
    ALL_USER_PROFILE_MANAGER("3");
    
    private String AuthorityKind;

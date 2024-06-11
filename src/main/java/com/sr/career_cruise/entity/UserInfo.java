@@ -42,7 +42,6 @@ public class UserInfo {
   @Column(name = "is_disabled")
   private boolean isDisabled;
   
-  // TODO 外部テーブルの作成
   /** ユーザー権限 */
   @Column
   private String authority;

@@ -27,7 +27,7 @@ public class MenuController {
   @GetMapping(UrlConst.MENU)
   public String view(@AuthenticationPrincipal User user, Model model){
     var hasUserManageAuth = user.getAuthorities().stream()
-      .allMatch(authority -> authority.getAuthority().equals(AuthorityKind.COMPANY_MANAGER.getAuthorityKind()));
+      .allMatch(authority -> authority.getAuthority().equals(AuthorityKind.ALL_USER_PROFILE_MANAGER.getAuthorityKind()));
     
     model.addAttribute("hasUserManageAuth", hasUserManageAuth);
     
