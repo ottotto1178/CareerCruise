@@ -2,7 +2,13 @@ package com.sr.career_cruise.entity;
 
 import java.time.LocalDateTime;
 
+import com.sr.career_cruise.constant.AuthorityKind;
+import com.sr.career_cruise.constant.UserStatuskind;
+import com.sr.career_cruise.entity.converter.UserAuthorityConverter;
+import com.sr.career_cruise.entity.converter.UserStatusConverter;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -40,11 +46,20 @@ public class UserInfo {
   
   /** 利用可不可 */
   @Column(name = "is_disabled")
-  private boolean isDisabled;
+  @Convert(converter = UserStatusConverter.class)
+  private UserStatuskind status;
   
   /** ユーザー権限 */
-  @Column
-  private String authority;
+  @Convert(converter = UserAuthorityConverter.class)
+  private AuthorityKind authority;
+
+  /** 登録日時 */
+  @Column(name = "create_time")
+  private LocalDateTime createTime;
+
+  /** 最終更新日時 */
+  @Column(name = "update_time")
+  private LocalDateTime updateTime;
   
   public UserInfo(){
   }
@@ -55,7 +70,7 @@ public class UserInfo {
    * @return ログイン失敗回数が加算されたUserInfo
    */
   public UserInfo incrementFailurCount(){
-    return new UserInfo(name, mailAddress, password, ++loginFailurCount, accountLockedTime, isDisabled, authority);
+    return new UserInfo(name, mailAddress, password, ++loginFailurCount, accountLockedTime, status, authority, createTime, updateTime);
   }
   
   /**
@@ -64,7 +79,7 @@ public class UserInfo {
    * @return ログイン失敗回数が加算されたUserInfo
    */
   public UserInfo resetLoginFailurInfo(){
-    return new UserInfo(name, mailAddress, password, 0, null, isDisabled, authority);
+    return new UserInfo(name, mailAddress, password, 0, null, status, authority, createTime, updateTime);
   }
 
   /**
@@ -73,6 +88,6 @@ public class UserInfo {
 	 * @return ログイン失敗回数、アカウントロック日時が更新されたUserInfo
 	 */
   public UserInfo updateAccountLocked(){
-    return new UserInfo(name, mailAddress, password, 0, LocalDateTime.now(), isDisabled, authority);
+    return new UserInfo(name, mailAddress, password, 0, LocalDateTime.now(), status, authority, createTime, updateTime);
   }
 }
